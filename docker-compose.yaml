@@ -1,0 +1,79 @@
+version: "3.7"
+
+services:
+  app:
+    build: './app'
+    container_name: 'django_app_backend'
+    restart: 'always'
+    expose: 
+      - "8000"
+    env_file:
+      - './.env'
+    # ports:
+    #   - "8000:8000"
+    # environment:
+    #   - "POSTGRES_DB= "
+    #   - "POSTGRES_USER= "
+    #   - "POSTGRES_PASSWORD= "
+    #   - "POSTGRES_HOST= "
+    #   - "POSTGRES_PORT= "
+    volumes:
+      - type: 'bind'
+        source: './volumes/app/config'
+        target: '/app'
+    depends_on:
+      - 'postgresql'
+      - 'redis'
+      - 'nginx'
+
+
+  postgresql:
+    image: 'postgres:latest'
+    container_name: 'django_app_postgres_db'
+    restart: 'always'
+    ports: 
+      - "5432:5432"
+    # expose: 
+    #   - "5432"
+    environment:
+      - "POSTGRES_DB=${POSTGRES_DB}"
+      - "POSTGRES_USER=${POSTGRES_USER}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+    volumes:
+      - type: bind
+        source: './volumes/postgresql_data'
+        target: '/var/lib/postgresql/data'
+
+
+  redis:
+    build: './redis'
+    container_name: 'django_app_redis'
+    restart: "always"
+    ports:
+      - "6379:6379"
+    volumes:
+      - type: "bind"
+        source: "./volumes/redis_data"
+        target: "/data"
+
+      # Enable it when you want to use your config.
+      # - type: "bind"
+        # source: "./redis/config"
+        # target: "/usr/local/etc/redis"
+
+
+  nginx:
+    build: './nginx'
+    container_name: 'django_app_nginx'
+    restart: 'always'
+    ports:
+      - "80:80"
+    volumes:
+      - type: 'bind'
+        source: './volumes/app/config/media'
+        target: '/app/media'
+
+      - type: 'bind'
+        source: './volumes/app/config/static'
+        target: '/app/static'
+
