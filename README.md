@@ -1,18 +1,18 @@
 # Dockerized Django Rest Framework User Account Manager
 
-A _Dockerized_ user account management system based on the phone number validation in django rest framework.
+A _Dockerized_ user account management system based on the phone number validation in Django rest framework.
 
 # Main Project Link:
 https://github.com/MohammadShapouri/DRF-UserAccount
 
 
 ## Differences
-* Using postgresql as database.
-* Using nginx as web server.
+* Using Postgresql as a database.
+* Using nginx as the web server.
 
 
 ## Installation
-* Run the following command in your teminal to clone this project or download it directly.
+* Run the following command in your terminal to clone this project or download it directly.
     ```
     $ git clone git@github.com:MohammadShapouri/Dockerized-DRF-UserAccount.git
     ```
