@@ -5,8 +5,8 @@ services:
     build: './app'
     container_name: 'django_app_backend'
     restart: 'always'
-    ports: 
-      - "8000:8000"
+    expose: 
+      - "8000"
     env_file:
       - './.env'
     # ports:
@@ -31,8 +31,8 @@ services:
     image: 'postgres:latest'
     container_name: 'django_app_postgres_db'
     restart: 'always'
-    expose: 
-      - "5432"
+    ports: 
+      - "5432:5432"
     # expose: 
     #   - "5432"
     environment:
